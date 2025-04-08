@@ -18,6 +18,10 @@ inputs:
     description: "Run a Unit Test build (--ut) instead of a normal build [true|false] (default: false)"
     required: false
     default: "false"
+  skip_requirements_install:
+    description: "Skip installing requirements.txt [true|false] (default: false)"
+    required: false
+    default: "false"
   target_platform:
     description: "F´ build platform (e.g. Linux, Darwin). Default specified in settings.ini."
     required: false
@@ -31,7 +35,8 @@ runs:
         cd ${{ inputs.fprime_location }}
         git checkout ${{ inputs.fprime_version }}
       shell: bash
-    - run: |
+    - if: inputs.skip_requirements_install == 'false'
+      run: |
         pip3 install -r ${{ inputs.fprime_location }}/requirements.txt
       shell: bash
     - if: inputs.run_unit_tests == 'false'

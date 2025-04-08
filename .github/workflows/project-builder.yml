@@ -27,6 +27,11 @@ on:
         type: string
         description: "F´ build platform (e.g. Linux, Darwin). Default specified in settings.ini."
         default: ""
+      skip_requirements_install:
+        description: "Skip installing requirements.txt [true|false] (default: false)"
+        type: boolean
+        required: false
+        default: false
       runs_on:
         required: false
         type: string
@@ -48,7 +53,8 @@ jobs:
           cd ${{ inputs.fprime_location }}
           git checkout ${{ inputs.fprime_version }}
         shell: bash
-      - name: "Install requirements.txt"
+      - if: inputs.skip_requirements_install == 'false'
+        name: "Install requirements.txt"
         run: |
           pip3 install -r ${{ inputs.fprime_location }}/requirements.txt
         shell: bash
@@ -78,7 +84,8 @@ jobs:
           cd ${{ inputs.fprime_location }}
           git checkout ${{ inputs.fprime_version }}
         shell: bash
-      - name: "Install requirements.txt"
+      - if: inputs.skip_requirements_install == 'false'
+        name: "Install requirements.txt"
         run: |
           pip3 install -r ${{ inputs.fprime_location }}/requirements.txt
       - name: "Generate UT build cache"
