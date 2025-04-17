@@ -32,6 +32,11 @@ on:
         type: boolean
         required: false
         default: false
+      extra_generate_args:
+        description: "Extra arguments to pass to fprime-util generate calls"
+        type: string
+        required: false
+        default: ""
       runs_on:
         required: false
         type: string
@@ -61,7 +66,7 @@ jobs:
       - name: "Generate build cache"
         working-directory: ${{ inputs.build_location }}
         run: |
-          fprime-util generate ${{ runner.debug == '1' && '--verbose' || '' }} ${{ inputs.target_platform }}
+          fprime-util generate ${{ inputs.extra_generate_args }} ${{ runner.debug == '1' && '--verbose' || '' }} ${{ inputs.target_platform }}
         shell: bash
       - name: "Build"
         working-directory: ${{ inputs.build_location }}
@@ -91,7 +96,7 @@ jobs:
       - name: "Generate UT build cache"
         working-directory: ${{ inputs.build_location }}
         run: |
-          fprime-util generate --ut ${{ runner.debug == '1' && '--verbose' || '' }}
+          fprime-util generate --ut ${{ inputs.extra_generate_args }} ${{ runner.debug == '1' && '--verbose' || '' }}
         shell: bash
       - name: "Build UTs"
         working-directory: ${{ inputs.build_location }}

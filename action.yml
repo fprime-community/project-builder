@@ -26,6 +26,10 @@ inputs:
     description: "F´ build platform (e.g. Linux, Darwin). Default specified in settings.ini."
     required: false
     default: ""
+  extra_generate_args:
+    description: "Extra arguments to pass to fprime-util generate"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -42,13 +46,13 @@ runs:
     - if: inputs.run_unit_tests == 'false'
       working-directory: ${{ inputs.build_location }}
       run: |
-        fprime-util generate ${{ inputs.target_platform }}
+        fprime-util generate ${{ inputs.extra_generate_args }} ${{ inputs.target_platform }}
         fprime-util build ${{ inputs.target_platform }}
       shell: bash
     - if: inputs.run_unit_tests == 'true'
       working-directory: ${{ inputs.build_location }}
       run: |
-        fprime-util generate --ut
+        fprime-util generate --ut ${{ inputs.extra_generate_args }}
         fprime-util build --ut
         fprime-util check
       shell: bash

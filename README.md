@@ -20,6 +20,7 @@ Choosing between using the reusable workflow or composite action can be a matter
 | fprime_location | `./fprime`     | Relative path from project root to F´ submodule|
 | runs_on         | `ubuntu-latest`| Platform to run on. Defaults to ubuntu-latest|
 | skip_requirements_install|`false`| Skip installing fprime/requirements.txt. |
+| extra_generate_args |            | Extra arguments to pass to the `generate` command |
 | target_platform |                | F´ build platform (e.g. Linux, Darwin). Default specified in settings.ini.|
 
 
